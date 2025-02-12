@@ -1,0 +1,29 @@
+name: build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Add Windows target for cross compiling
+      run: rustup target add x86_64-pc-windows-gnu
+    - name: install dependencies
+      run: sudo apt-get install mingw-w64
+    - name: configure rust for cross compiling
+      run: |
+        echo '[target.x86_64-pc-windows-gnu]' >> ~/.cargo/config.toml
+        echo 'linker = "x86_64-w64-mingw32-gcc"' >> ~/.cargo/config.toml
+        echo 'ar = "x86_64-w64-mingw32-gcc-ar"' >> ~/.cargo/config.toml
+    - name: Build Linux
+      run: cargo build --verbose
+    - name: Build Windows
+      run: cargo build --target=x86_64-pc-windows-gnu --verbose
