@@ -13,10 +13,10 @@
 //! sqlite> SELECT rusqlite_test_function();
 //! Rusqlite extension loaded correctly!
 //! ```
+use rusqlite::ffi;
 use std::os::raw::{c_char, c_int};
 
-use rusqlite::{ffi, ToSql};
-use rusqlite::functions::{Context, FunctionFlags, SqlFnOutput};
+use rusqlite::functions::FunctionFlags;
 use rusqlite::types::{ToSqlOutput, Value};
 use rusqlite::{Connection, Result};
 
@@ -36,17 +36,6 @@ pub unsafe extern "C" fn sqlite3_extension_init(
 
 fn extension_init(db: Connection) -> Result<bool> {
     db.create_scalar_function(
-        "rusqlite_test_function",
-        0,
-        FunctionFlags::SQLITE_DETERMINISTIC,
-        |_ctx| {
-            Ok(ToSqlOutput::Owned(Value::Text(
-                "rs-decancer-sqlite extension loaded correctly!".to_string(),
-            )))
-        },
-    )?;
-
-    db.create_scalar_function(
         "decancer_string",
         1, 
         FunctionFlags::SQLITE_DETERMINISTIC, 
@@ -59,6 +48,7 @@ fn extension_init(db: Connection) -> Result<bool> {
             )))
         }
     )?;
+
     rusqlite::trace::log(ffi::SQLITE_WARNING, "rs-decancer-sqlite extension initialized");
     Ok(false)
 }
