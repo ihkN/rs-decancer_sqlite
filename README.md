@@ -31,26 +31,20 @@ cargo build --release
 
 # Load the extension in your SQLite database
 sqlite my_database.db
-.load ./target/release/libsqlite_decancer.so  # Path may vary
+.load ./target/release/libdecancer_sqlite.so  # Path may vary
 
 Usage
 Once the extension is loaded, you can use the decancer() function in your SQL queries:
-SELECT decancer('Héllo Wørld!'); -- Example input with problematic characters
+SELECT decancer_string('Héllo Wørld!'); -- Example input with problematic characters
 -- Expected output: Hello World!
 
 -- Example within a table update
-UPDATE my_table SET name = decancer(name) WHERE id = 1;
+UPDATE my_table SET name = decancer_string(name) WHERE id = 1;
 
 -- Example in a SELECT statement with a WHERE clause
-SELECT * FROM my_table WHERE decancer(name) = 'john doe';
+SELECT * FROM my_table WHERE decancer_string(name) = 'john doe';
 
 API
 The extension provides a single function:
- * decancer(text TEXT): Takes a string as input and returns the "cured" string after applying the decancer transformations.
+ * decancer_string(text TEXT): Takes a string as input and returns the "cured" string after applying the decancer transformations.
 Examples
-(Provide more detailed examples of how to use the extension in various scenarios.)
-Contributing
-(If you welcome contributions, explain the process for contributing to your project.)
-License
-(Specify the license under which your project is distributed.)
-
