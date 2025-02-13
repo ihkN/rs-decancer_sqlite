@@ -21,8 +21,6 @@ This extension simplifies data cleaning workflows by performing the sanitization
 
 ## Installation
 
-_(Provide specific instructions for installation.  This will likely involve compiling the extension and loading it into your SQLite database.  Include details about dependencies and build steps.)_
-
 Example (Illustrative - Adapt to your actual build process):
 
 ```bash
@@ -34,7 +32,7 @@ sqlite my_database.db
 .load ./target/release/libdecancer_sqlite.so  # Path may vary
 
 Usage
-Once the extension is loaded, you can use the decancer() function in your SQL queries:
+Once the extension is loaded, you can use the decancer_string() function in your SQL queries:
 SELECT decancer_string('Héllo Wørld!'); -- Example input with problematic characters
 -- Expected output: Hello World!
 
@@ -43,6 +41,7 @@ UPDATE my_table SET name = decancer_string(name) WHERE id = 1;
 
 -- Example in a SELECT statement with a WHERE clause
 SELECT * FROM my_table WHERE decancer_string(name) = 'john doe';
+```
 
 API
 The extension provides a single function:
