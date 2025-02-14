@@ -55,5 +55,5 @@ SELECT * FROM my_table WHERE decancer_string(name) = 'john doe';
 ## API
 
 The extension provides a single function:
- * decancer_string(text TEXT): Takes a string as input and returns the "cured" string after applying the decancer transformations.
+ * `decancer_string(text TEXT)`: Takes a string as input and returns the "cured" string after applying the decancer transformations.
 Examples
