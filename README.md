@@ -1,6 +1,6 @@
 # sqlite-decancer
 
-This project provides a SQLite extension that leverages the Rust `decancer` crate to sanitize and "cure" strings, removing or replacing potentially problematic Unicode characters.  The extension exposes a function that takes a string as input and returns a cleaned version, suitable for storage and comparison within your SQLite database.
+This project provides a SQLite extension that leverages the Rust [`decancer`](https://crates.io/crates/decancer) crate to sanitize and "cure" strings, removing or replacing potentially problematic Unicode characters.  The extension exposes a function that takes a string as input and returns a cleaned version, suitable for storage and comparison within your SQLite database.
 
 ## Purpose
 
@@ -18,21 +18,30 @@ This extension simplifies data cleaning workflows by performing the sanitization
 * **Rust-Powered:**  Utilizes the `decancer` crate for robust and efficient string sanitization.
 * **Simplified Usage:**  Easy to use with a single function call.
 * **Focus on Cured String Output:**  The extension focuses on returning the cleaned string, ready for use in your database.
+## Building
+
+This SQLite extension requires Rust and Cargo to build.  Ensure you have Rust installed (you can download it from [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install)).
+
+To build the extension, navigate to the project directory in your terminal and run the following command:
+
+```bash
+cargo build --release
+```
 
 ## Installation
 
 Example (Illustrative - Adapt to your actual build process):
 
 ```bash
-# Example build commands (replace with your actual build process)
-cargo build --release
-
 # Load the extension in your SQLite database
 sqlite my_database.db
 .load ./target/release/libdecancer_sqlite.so  # Path may vary
+```
+## Usage
 
-Usage
 Once the extension is loaded, you can use the decancer_string() function in your SQL queries:
+
+```sql
 SELECT decancer_string('Héllo Wørld!'); -- Example input with problematic characters
 -- Expected output: Hello World!
 
@@ -43,7 +52,8 @@ UPDATE my_table SET name = decancer_string(name) WHERE id = 1;
 SELECT * FROM my_table WHERE decancer_string(name) = 'john doe';
 ```
 
-API
+## API
+
 The extension provides a single function:
  * decancer_string(text TEXT): Takes a string as input and returns the "cured" string after applying the decancer transformations.
 Examples
